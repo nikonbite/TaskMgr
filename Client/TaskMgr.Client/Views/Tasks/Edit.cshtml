@@ -1,0 +1,83 @@
+@model TaskMgr.Server.Models.DTOs.UpdateTaskDTO
+
+@{
+    ViewData["Title"] = "Редактирование задачи";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="card">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl">Редактирование задачи</h1>
+                <form asp-action="Delete" asp-route-id="@ViewBag.TaskId" method="post" class="inline"
+                      onsubmit="return confirm('Вы уверены, что хотите удалить эту задачу?');">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" 
+                        class="btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500">
+                        Удалить
+                    </button>
+                </form>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="error-message mb-4"></div>
+
+                <div class="form-group">
+                    <label asp-for="Title" class="label">Название</label>
+                    <input asp-for="Title" class="input" />
+                    <span asp-validation-for="Title" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="label">Описание</label>
+                    <textarea asp-for="Description" class="textarea"></textarea>
+                    <span asp-validation-for="Description" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AssigneeID" class="label">Исполнитель</label>
+                    <select asp-for="AssigneeID" class="select">
+                        <option value="">Выберите исполнителя</option>
+                        @foreach (var user in ViewBag.Users)
+                        {
+                            <option value="@user.ID">@user.FullName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AssigneeID" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StatusID" class="label">Статус</label>
+                    <select asp-for="StatusID" class="select">
+                        @foreach (var status in ViewBag.Statuses)
+                        {
+                            <option value="@status.ID">@status.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="StatusID" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Deadline" class="label">Срок выполнения</label>
+                    <input asp-for="Deadline" type="date" class="input" />
+                    <span asp-validation-for="Deadline" class="error-message"></span>
+                </div>
+
+                <div class="flex justify-end space-x-4 mt-8">
+                    <a href="javascript:history.back()" 
+                       class="btn btn-secondary">
+                        Отмена
+                    </a>
+                    <button type="submit" 
+                        class="btn btn-primary">
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

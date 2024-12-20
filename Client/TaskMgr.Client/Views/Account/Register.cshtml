@@ -1,0 +1,92 @@
+@model TaskMgr.Server.Models.DTOs.RegisterDTO
+
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="flex min-h-[calc(100vh-4rem)] flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="text-center text-2xl font-bold leading-9 tracking-tight">
+            Регистрация
+        </h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="card">
+            <form asp-action="Register" method="post" class="space-y-6">
+                <div asp-validation-summary="All" class="text-red-500 text-sm"></div>
+                
+                @if (ViewData["ReturnUrl"] != null)
+                {
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                }
+                
+                <div>
+                    <label asp-for="FirstName" class="block text-sm font-medium leading-6">
+                        Имя
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="FirstName" type="text" class="input block w-full" placeholder="Иван">
+                        <span asp-validation-for="FirstName" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="LastName" class="block text-sm font-medium leading-6">
+                        Фамилия
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="LastName" type="text" class="input block w-full" placeholder="Иванов">
+                        <span asp-validation-for="LastName" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Email" class="block text-sm font-medium leading-6">
+                        Email
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="Email" type="email" class="input block w-full" placeholder="example@email.com">
+                        <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Password" class="block text-sm font-medium leading-6">
+                        Пароль
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="Password" type="password" class="input block w-full" placeholder="Минимум 6 символов">
+                        <span asp-validation-for="Password" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary w-full">
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-gray-500">
+                Уже есть аккаунт?
+                <a asp-action="Login" class="font-semibold leading-6 text-primary hover:text-primary-dark">
+                    Войти
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                if ($(this).valid()) {
+                    $(this).find('button[type="submit"]').prop('disabled', true);
+                }
+            });
+        });
+    </script>
+} 

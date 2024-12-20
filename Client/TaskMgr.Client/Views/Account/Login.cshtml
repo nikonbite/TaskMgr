@@ -1,0 +1,63 @@
+@model TaskMgr.Server.Models.DTOs.LoginDTO
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="flex min-h-[calc(100vh-4rem)] flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="text-center text-2xl font-bold leading-9 tracking-tight">
+            Вход в аккаунт
+        </h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="card">
+            <form asp-action="Login" method="post" class="space-y-6">
+                <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm"></div>
+                
+                @if (ViewData["ReturnUrl"] != null)
+                {
+                    <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                }
+                
+                <div>
+                    <label asp-for="Email" class="block text-sm font-medium leading-6">
+                        Email
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="Email" type="email" required class="input block w-full" placeholder="example@email.com">
+                        <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label asp-for="Password" class="block text-sm font-medium leading-6">
+                        Пароль
+                    </label>
+                    <div class="mt-2">
+                        <input asp-for="Password" type="password" required class="input block w-full" placeholder="••••••••">
+                        <span asp-validation-for="Password" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary w-full">
+                        Войти
+                    </button>
+                </div>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-gray-500">
+                Нет аккаунта?
+                <a asp-action="Register" class="font-semibold leading-6 text-primary hover:text-primary-dark">
+                    Зарегистрироваться
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

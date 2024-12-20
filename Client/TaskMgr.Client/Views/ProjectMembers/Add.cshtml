@@ -1,0 +1,55 @@
+@model IEnumerable<TaskMgr.Server.Models.DTOs.UserDTO>
+
+@{
+    ViewData["Title"] = "Добавление участника";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="card">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl">Добавление участника</h1>
+                <a href="@Url.Action("Index", new { projectId = ViewBag.ProjectId })" 
+                   class="btn btn-secondary">
+                    Назад
+                </a>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <p class="text-center text-gray-600 dark:text-gray-400">
+                    Нет доступных пользователей для добавления в проект.
+                </p>
+            }
+            else
+            {
+                <div class="grid gap-4">
+                    @foreach (var user in Model)
+                    {
+                        <div class="card">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-semibold">@user.FullName</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">@user.Email</p>
+                                </div>
+                                <form asp-action="Add" method="post" class="flex items-center space-x-2">
+                                    <input type="hidden" name="projectId" value="@ViewBag.ProjectId" />
+                                    <input type="hidden" name="userId" value="@user.ID" />
+                                    <select name="role" class="select text-sm py-1">
+                                        @foreach (var role in ViewBag.Roles)
+                                        {
+                                            <option value="@role">@role</option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">
+                                        Добавить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div> 

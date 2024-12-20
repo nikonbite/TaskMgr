@@ -1,0 +1,22 @@
+﻿@model TaskMgr.Client.Models.ErrorViewModel
+@{
+    ViewData["Title"] = "Ошибка";
+}
+
+<div class="text-center">
+    <h1 class="text-4xl font-bold text-red-500 mb-4">Ошибка</h1>
+    <p class="text-gray-600 dark:text-gray-400">
+        Произошла ошибка при обработке вашего запроса.
+    </p>
+    @if (Model.ShowRequestId)
+    {
+        <p class="text-sm text-gray-500 mt-2">
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+    <div class="mt-6">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+            Вернуться на главную
+        </a>
+    </div>
+</div>

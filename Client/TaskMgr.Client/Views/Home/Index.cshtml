@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="bg-background-light dark:bg-background-dark">
+    <div class="relative isolate px-6 pt-14 lg:px-8">
+        <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold tracking-tight text-text-light dark:text-text-dark sm:text-6xl">
+                    Управляйте задачами эффективно
+                </h1>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+                    TaskMgr - это современная система управления задачами, которая помогает вам и вашей команде быть более продуктивными.
+                </p>
+                <div class="mt-10 flex items-center justify-center gap-x-6">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Projects" asp-action="Index" class="btn btn-primary">
+                            Мои проекты
+                        </a>
+                        <a asp-controller="Tasks" asp-action="Index" class="btn btn-secondary">
+                            Мои задачи
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-primary">
+                            Начать бесплатно
+                        </a>
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">
+                            Войти
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
